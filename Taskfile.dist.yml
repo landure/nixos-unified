@@ -18,15 +18,24 @@ tasks:
       - home
       - switch
     cmds:
-      - /nix/store/m9h2g97vj2zm26q6cym1sr0rn3kcgy5m-home-manager-0-unstable-2025-10-18/bin/home-manager switch --flake '.#{{.HOSTNAME}}'
-    desc: Apply changes to home-manager configuration
+      - /nix/store/m9h2g97vj2zm26q6cym1sr0rn3kcgy5m-home-manager-0-unstable-2025-10-18/bin/home-manager switch --flake '.#activate'
+    desc: "\U0001F528 Apply changes to home-manager configuration"
     requires:
       vars:
         - HOSTNAME
   build:iego:
+    aliases:
+      - iego
     cmds:
-      - /nix/store/v9vmi223p9mybbi2qrj1p8vqkkvh8lia-nixos-rebuild/bin/nixos-rebuild switch --target-host pierre-yves@192.168.178.37 --use-remote-sudo --flake .#iego
-    desc: Apply changes to iego (ASUS eeePC)
+      - nix run .#activate iego
+    desc: "\U0001F528 Apply changes to iego (ASUS eeePC)"
+    requires: {}
+  build:sunny:
+    aliases:
+      - sunny
+    cmds:
+      - nix run .#activate sunny
+    desc: "\U0001F528 Apply changes to sunny (Home server)"
     requires: {}
   cd:
     cmds:

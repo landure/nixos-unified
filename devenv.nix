@@ -48,7 +48,7 @@ in
           "home"
           "switch"
         ];
-        desc = "Apply changes to home-manager configuration";
+        desc = "🔨 Apply changes to home-manager configuration";
         cmds = [ "${hmCommand} switch --flake '.#activate'" ];
         requires = {
           vars = [ "HOSTNAME" ];
@@ -64,11 +64,16 @@ in
         };
       };
 
+      "build:sunny" = {
+        aliases = [ "sunny" ];
+        desc = "🔨 Apply changes to sunny (Home server)";
+        cmds = [ "nix run .#activate sunny" ];
+      };
+
       "build:iego" = {
-        desc = "Apply changes to iego (ASUS eeePC)";
-        cmds = [
-          "${rebuildCommand} switch --target-host pierre-yves@192.168.178.37 --use-remote-sudo --flake .#iego"
-        ];
+        aliases = [ "iego" ];
+        desc = "🔨 Apply changes to iego (ASUS eeePC)";
+        cmds = [ "nix run .#activate iego" ];
       };
     };
   };
