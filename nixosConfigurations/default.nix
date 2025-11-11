@@ -1,1 +1,4 @@
-inputs: { "sunny" = import ./sunny inputs; }
+inputs: {
+  "iego" = import ./iego inputs;
+  "sunny" = import ./sunny inputs;
+}
