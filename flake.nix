@@ -1,5 +1,10 @@
 {
+  description = "NixOS Unified-based provisionning, with Flake parts";
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    nixos-unified.url = "github:srid/nixos-unified";
+
     # Principle inputs (updated by `nix run .#update`)
     nixpkgs.url = "nixpkgs/nixos-25.05";
 
@@ -15,9 +20,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    nixos-unified.url = "github:srid/nixos-unified";
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,24 +31,46 @@
   };
 
   outputs =
-    inputs@{
+    {
       self,
       flake-parts,
       nixos-unified,
       disko,
       nixos-facter-modules,
       ...
-    }:
+    }@inputs:
     let
       inherit (flake-parts.lib) mkFlake;
     in
     mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        # "aarch64-linux"
+
+      imports = [
+        nixos-unified.flakeModules.default
+
+        # See https://flake.parts/options/disko.html
+        inputs.disko.flakeModules.default
       ];
 
-      imports = [ nixos-unified.flakeModules.default ];
+      # Declared systems that your flake supports. These will be enumerated in perSystem
+      systems = [
+        "x86_64-linux"
+        # "aarch64-linux" "x86_64-darwin" "aarch64-darwin"
+      ];
+
+      # perSystem = { config, self', inputs', pkgs, system, ... }: {
+      # Allows definition of system-specific attributes
+      # without needing to declare the system explicitly!
+      #
+      # Quick rundown of the provided arguments:
+      # - config is a reference to the full configuration, lazily evaluated
+      # - self' is the outputs as provided here, without system. (self'.packages.default)
+      # - inputs' is the input without needing to specify system (inputs'.foo.packages.bar)
+      # - pkgs is an instance of nixpkgs for your specific system
+      # - system is the system this configuration is for
+
+      # This is equivalent to packages.<system>.default
+      # packages.default = pkgs.hello;
+      # };
 
       flake = {
         # Configurations for Linux (NixOS) machines
@@ -58,7 +82,7 @@
           { pkgs, ... }:
           {
             imports = [
-              disko.nixosModules.default
+              # disko.nixosModules.default
               nixos-facter-modules.nixosModules.facter
             ];
           };
