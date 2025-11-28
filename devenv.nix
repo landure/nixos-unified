@@ -75,6 +75,12 @@ in
         desc = "🔨 Apply changes to iego (ASUS eeePC)";
         cmds = [ "nix run .#activate iego" ];
       };
+
+      "build:ghost" = {
+        aliases = [ "ghost" ];
+        desc = "🔨 Apply changes to ghost (co-bre-pc04 VM)";
+        cmds = [ "nix run .#activate ghost" ];
+      };
     };
   };
 

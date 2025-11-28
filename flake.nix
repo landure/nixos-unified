@@ -82,8 +82,10 @@
           { pkgs, ... }:
           {
             imports = [
-              # disko.nixosModules.default
+              disko.nixosModules.default
               nixos-facter-modules.nixosModules.facter
+
+              ./nixosModules
             ];
           };
 

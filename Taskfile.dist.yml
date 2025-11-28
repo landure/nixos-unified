@@ -13,6 +13,13 @@ tasks:
     vars:
       TASKS:
         sh: task --json --list-all | yq '.tasks[].name' | grep --only-matching --extended-regexp '{{.TASK}}:[^:]+$'
+  build:ghost:
+    aliases:
+      - ghost
+    cmds:
+      - nix run .#activate ghost
+    desc: "\U0001F528 Apply changes to ghost (co-bre-pc04 VM)"
+    requires: {}
   build:home-manager:
     aliases:
       - home
