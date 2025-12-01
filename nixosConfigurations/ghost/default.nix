@@ -14,6 +14,8 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
     (
       { pkgs, ... }:
       {
+        networking.hostName = "ghost";
+        nixos-unified.sshTarget = "nixos@192.168.122.241";
 
         biapy.nixos-unified.nixos.modern-cli.enable = true;
 
@@ -23,8 +25,6 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
         # fileSystems."/" = { device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S3Z2NB0M434899Y"; fsType = "btrfs"; };
         users.users.${mainUser}.isNormalUser = true;
         system.stateVersion = stateVersion;
-
-        nixos-unified.sshTarget = "root@192.168.122.241";
 
         facter.reportPath = ./facter.json;
         disko.devices.disk.main.device = "/dev/vda";

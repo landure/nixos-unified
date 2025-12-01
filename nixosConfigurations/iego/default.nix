@@ -13,7 +13,9 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
     (
       { pkgs, ... }:
       {
-        # TODO: Put your /etc/nixos/hardware-configuration.nix here
+        networking.hostName = "iego";
+        nixos-unified.sshTarget = "pierre-yves@192.168.178.37";
+
         boot.loader.grub.device = "nodev";
         fileSystems."/" = {
           device = "/dev/disk/by-label/nixos";
@@ -25,7 +27,6 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
         facter.reportPath = ./facter.json;
         disko.devices.disk.main.device = "/dev/sda";
 
-        nixos-unified.sshTarget = "pierre-yves@192.168.178.37";
       }
     )
     # Setup home-manager in NixOS config

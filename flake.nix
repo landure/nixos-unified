@@ -72,6 +72,13 @@
       # packages.default = pkgs.hello;
       # };
 
+      perSystem =
+        { self, ... }:
+        {
+          # alias `nix run .#activate` to `nix run`
+          packages.default = self.packages.activate;
+        };
+
       flake = {
         # Configurations for Linux (NixOS) machines
         # nixosConfigurations = import ./hosts (inputs // { inherit myUserName; });

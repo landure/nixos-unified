@@ -14,14 +14,15 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
     (
       { pkgs, ... }:
       {
+        networking.hostName = "sunny";
+        nixos-unified.sshTarget = "nixos@192.168.178.4";
+
         # TODO: Put your /etc/nixos/hardware-configuration.nix here
         boot.loader.grub.device = "nodev";
 
         # fileSystems."/" = { device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S3Z2NB0M434899Y"; fsType = "btrfs"; };
         users.users.${mainUser}.isNormalUser = true;
         system.stateVersion = stateVersion;
-
-        nixos-unified.sshTarget = "nixos@192.168.178.4";
 
         facter.reportPath = ./facter.json;
         disko.devices.disk.main.device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_500GB_S3Z2NB0M434899Y";
