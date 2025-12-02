@@ -5,10 +5,10 @@
   ...
 }:
 let
-  inherit (lib.options) mkOption mkDefault;
+  inherit (lib.options) mkOption;
   inherit (lib.attrsets) attrValues;
   inherit (lib.types) bool attrsOf package;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkIf mkDefault;
 
   cfg = config.biapy.nixos-unified.nixos.modern-cli;
 
