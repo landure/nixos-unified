@@ -6,7 +6,7 @@
     nixos-unified.url = "github:srid/nixos-unified";
 
     # Principle inputs (updated by `nix run .#update`)
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -73,7 +73,7 @@
       # };
 
       perSystem =
-        { self, ... }:
+        { config, self, ... }:
         {
           # alias `nix run .#activate` to `nix run`
           packages.default = self.packages.activate;
