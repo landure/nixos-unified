@@ -17,7 +17,7 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
         networking.hostName = "ghost";
         nixos-unified.sshTarget = "nixos@192.168.122.241";
 
-        biapy.nixos-unified.nixos.modern-cli.enable = true;
+        biapy.nixos-unified.nixos.console.modern-cli.enable = true;
 
         # TODO: Put your /etc/nixos/hardware-configuration.nix here
         boot.loader.grub.device = "nodev";

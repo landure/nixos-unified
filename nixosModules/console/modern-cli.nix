@@ -10,7 +10,7 @@ let
   inherit (lib.types) bool attrsOf package;
   inherit (lib.modules) mkIf mkDefault;
 
-  cfg = config.biapy.nixos-unified.nixos.modern-cli;
+  cfg = config.biapy.nixos-unified.nixos.console.modern-cli;
 
   # List of supported CLI tools and their package names
   cliTools = {
@@ -40,7 +40,7 @@ let
 in
 {
   options = {
-    biapy.nixos-unified.nixos.modern-cli = {
+    biapy.nixos-unified.nixos.console.modern-cli = {
       enable = mkOption {
         type = bool;
         default = true;

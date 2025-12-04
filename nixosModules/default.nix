@@ -1,6 +1,6 @@
 _: {
   imports = [
+    ./console
     ./disko.nix
-    ./modern-cli.nix
   ];
 }
