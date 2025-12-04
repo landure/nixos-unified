@@ -4,6 +4,8 @@ inputs:
     url: github:cachix/devenv-nixpkgs/rolling
   nixpkgs-unstable:
     url: github:nixos/nixpkgs/nixpkgs-unstable
+  agenix:
+    url: "github:ryantm/agenix"
   go-task:
     url: github:biapy/devenv-go-task?dir=modules/go-task
     flake: false

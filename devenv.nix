@@ -1,9 +1,18 @@
-{ lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (pkgs) nixos-rebuild home-manager;
+  inherit (pkgs.stdenv.hostPlatform) system;
+
   rebuildCommand = lib.meta.getExe nixos-rebuild;
 
   hmCommand = lib.meta.getExe pkgs.home-manager;
+
+  agenix = inputs.agenix.packages.${system}.default;
 in
 {
   biapy.go-task.enable = true;
@@ -23,6 +32,7 @@ in
   };
 
   packages = [
+    agenix
     nixos-rebuild
     home-manager
   ];

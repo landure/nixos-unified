@@ -33,3 +33,14 @@ To list available tasks:
 ```bash
 task
 ```
+
+## Thanks
+
+### Disko & NixOS Anywhere
+
+- [Nixos encrypted installation with kexec, disko, luks, btrfs and remote luks
+  unblock on a Hetzner auction server (or any cloud provider vps/vds)
+  @ Life is too short to be someone else](https://www.brokenpip3.com/posts/2025-05-25-nixos-secure-installation-hetzner/).
+- [How I Set up BTRFS and LUKS on NixOS Using Disko @ Haseeb Majid](https://haseebmajid.dev/posts/2024-07-30-how-i-setup-btrfs-and-luks-on-nixos-using-disko/).
+
+<!-- CSpell:ignore kexec disko luks btrfs Haseeb Majid -->

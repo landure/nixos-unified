@@ -10,6 +10,11 @@
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -35,6 +40,7 @@
       self,
       flake-parts,
       nixos-unified,
+      agenix,
       disko,
       nixos-facter-modules,
       ...
@@ -86,13 +92,26 @@
         nixosConfigurations = import ./nixosConfigurations inputs;
 
         nixosModules.default =
-          { pkgs, ... }:
+          { lib, pkgs, ... }:
+          let
+            inherit (lib.modules) mkForce;
+            inherit (pkgs.stdenv.hostPlatform) system;
+          in
           {
             imports = [
               disko.nixosModules.default
               nixos-facter-modules.nixosModules.facter
+              agenix.nixosModules.default
 
               ./nixosModules
+
+              {
+                home-manager.useGlobalPkgs = mkForce false;
+                age = {
+                  identityPaths = [ "/home/pierre-yves/.ssh/id_ed25519" ];
+                };
+                environment.systemPackages = [ agenix.packages.${system}.default ];
+              }
             ];
           };
 
@@ -103,7 +122,9 @@
             imports = [
               # @see https://nix-community.github.io/stylix
               inputs.stylix.homeModules.stylix
+              agenix.homeManagerModules.default
             ];
+
             programs = {
               git.enable = true;
               starship.enable = true;
