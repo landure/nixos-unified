@@ -1,1 +1,6 @@
-_: { imports = [ ./modern-cli.nix ]; }
+_: {
+  imports = [
+    ./kmscon.nix
+    ./modern-cli.nix
+  ];
+}
