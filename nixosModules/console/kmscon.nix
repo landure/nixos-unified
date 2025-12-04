@@ -29,7 +29,7 @@ let
 in
 {
   options = {
-    biapy.nixos-unified.nixos.console.kmscon = mkEnableOption "kmscon";
+    biapy.nixos-unified.nixos.console.kmscon.enable = mkEnableOption "kmscon";
   };
 
   config = mkIf cfg.enable {
