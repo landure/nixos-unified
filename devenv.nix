@@ -1,18 +1,13 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, pkgs, ... }:
 let
-  inherit (pkgs) nixos-rebuild home-manager;
-  inherit (pkgs.stdenv.hostPlatform) system;
+  inherit (lib.meta) getExe;
+  inherit (pkgs) nixos-rebuild home-manager sops;
+  # inherit (pkgs.stdenv.hostPlatform) system;
 
-  rebuildCommand = lib.meta.getExe nixos-rebuild;
+  rebuildExe = getExe nixos-rebuild;
 
-  hmCommand = lib.meta.getExe pkgs.home-manager;
-
-  agenix = inputs.agenix.packages.${system}.default;
+  hmExe = getExe home-manager;
+  sopsExe = getExe sops;
 in
 {
   biapy.go-task.enable = true;
@@ -32,7 +27,7 @@ in
   };
 
   packages = [
-    agenix
+    sops
     nixos-rebuild
     home-manager
   ];
@@ -41,7 +36,38 @@ in
   tasks = {
     "build:iego" = {
       description = "Apply changes to iego (ASUS eeePC)";
-      exec = "${rebuildCommand} switch --target-host pierre-yves@192.168.178.37 --use-remote-sudo --flake .#iego";
+      exec = "${rebuildExe} switch --target-host pierre-yves@192.168.178.37 --use-remote-sudo --flake .#iego";
+    };
+  };
+
+  scripts = {
+    "deploy-nixos" = {
+      description = ''
+        Run nixos-anywhere with SOPS luks password file copy
+        See <https://github.com/nix-community/disko/issues/641#issuecomment-2142627125>
+      '';
+      exec = ''
+        set -e
+
+        hostname="''${1}"
+        target_host="''${2}"
+
+        secret_file="''${DEVENV_ROOT}/secrets/hosts/''${hostname}.yaml"
+
+        clear_luks_passwordfile="$(mktemp --quiet)"
+
+        SOPS_AGE_SSH_PRIVATE_KEY_FILE="''${HOME}/.ssh/id_ed25519" \
+          ${sopsExe} --decrypt --extract "['luks_password']" \
+            "''${secret_file}" > "''${clear_luks_passwordfile}"
+
+          cat "''${clear_luks_passwordfile}"
+
+        nix run 'github:nix-community/nixos-anywhere' -- \
+          --disk-encryption-keys '/tmp/luks_passwordfile' "''${clear_luks_passwordfile}" \
+          --flake ".#''${hostname}" --target-host "''${target_host}"
+
+        rm "''${clear_luks_passwordfile}"
+      '';
     };
   };
 
@@ -59,7 +85,7 @@ in
           "switch"
         ];
         desc = "🔨 Apply changes to home-manager configuration";
-        cmds = [ "${hmCommand} switch --flake '.#activate'" ];
+        cmds = [ "${hmExe} switch --flake '.#activate'" ];
         requires = {
           vars = [ "HOSTNAME" ];
         };
@@ -68,7 +94,7 @@ in
       "utils:home-manager:news" = {
         aliases = [ "news" ];
         desc = "Read home-manager news";
-        cmds = [ "${hmCommand} news --flake '.#{{.HOSTNAME}}'" ];
+        cmds = [ "${hmExe} news --flake '.#{{.HOSTNAME}}'" ];
         requires = {
           vars = [ "HOSTNAME" ];
         };

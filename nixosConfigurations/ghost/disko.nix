@@ -3,8 +3,7 @@
 
   Iego use a small 20Go SSD.
 */
-{ config, ... }:
-{
+_: {
   disko.devices.disk = {
     data = {
       type = "disk";
@@ -17,7 +16,7 @@
             content = {
               type = "luks";
               name = "cryptdata";
-              passwordFile = config.age.secrets.luks-encryption-key.path;
+              passwordFile = "/tmp/luks_passwordfile";
               settings = {
                 allowDiscards = true;
                 fallbackToPassword = true;
@@ -82,7 +81,7 @@
               type = "luks";
               name = "cryptroot";
               # disable settings.keyFile if you want to use interactive password entry
-              passwordFile = config.age.secrets.luks-encryption-key.path;
+              passwordFile = "/tmp/luks_passwordfile";
               settings = {
                 allowDiscards = true;
                 fallbackToPassword = true;

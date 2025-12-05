@@ -1,0 +1,11 @@
+keys:
+  - &user_py_landure_cobredia_fr ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILg7UMMfh3KAlSvnjDLg8YZDvW7QdShZWy0Q9lYNsZqy py.landure@cobredia.fr
+  - &user_pierre-yves_landure_fr ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWk91xtWdVTzO7pSme5GLq7SjfIim5jqPuYqaIwWQGw pierre-yves@landure.fr
+  - &host_co-bre-pc04 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIdGsGpFcZ1kMe3qfqxoilnB34VCMAiorrEixIH8O1/p root@co-bre-pc04
+creation_rules:
+  - path_regex: secrets/.+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *user_py_landure_cobredia_fr
+      - *user_pierre-yves_landure_fr
+      - *host_co-bre-pc04

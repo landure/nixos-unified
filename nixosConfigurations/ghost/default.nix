@@ -17,7 +17,10 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
         networking.hostName = "ghost";
         nixos-unified.sshTarget = "nixos@192.168.122.241";
 
-        age.secrets.luks-encryption-key.file = ../../secrets/ghost/luks-encryption-key.age;
+        sops.defaultSopsFile = ../../secrets/hosts/ghost.yaml;
+
+        # This is the actual specification of the secrets.
+        sops.secrets.luks_password = { };
 
         biapy.nixos-unified.nixos.console.modern-cli.enable = true;
 

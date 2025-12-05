@@ -10,8 +10,8 @@
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    agenix = {
-      url = "github:ryantm/agenix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -40,7 +40,7 @@
       self,
       flake-parts,
       nixos-unified,
-      agenix,
+      sops-nix,
       disko,
       nixos-facter-modules,
       ...
@@ -95,22 +95,23 @@
           { lib, pkgs, ... }:
           let
             inherit (lib.modules) mkForce;
-            inherit (pkgs.stdenv.hostPlatform) system;
           in
           {
             imports = [
               disko.nixosModules.default
               nixos-facter-modules.nixosModules.facter
-              agenix.nixosModules.default
+              sops-nix.nixosModules.sops
 
               ./nixosModules
 
               {
                 home-manager.useGlobalPkgs = mkForce false;
-                age = {
-                  identityPaths = [ "/home/pierre-yves/.ssh/id_ed25519" ];
-                };
-                environment.systemPackages = [ agenix.packages.${system}.default ];
+
+                # This will automatically import SSH keys as age keys
+                sops.age.sshKeyPaths = [
+                  "/etc/ssh/ssh_host_ed25519_key"
+                  "/home/pierre-yves/.ssh/id_ed25519"
+                ];
               }
             ];
           };
@@ -122,7 +123,6 @@
             imports = [
               # @see https://nix-community.github.io/stylix
               inputs.stylix.homeModules.stylix
-              agenix.homeManagerModules.default
             ];
 
             programs = {
