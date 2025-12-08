@@ -34,6 +34,10 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
         facter.reportPath = ./facter.json;
         disko.devices.disk.main.device = "/dev/vda";
         disko.devices.disk.data.device = "/dev/vdb";
+
+        biapy.nixos-unified.nixos.services.openssh = {
+          enable = true;
+        };
       }
     )
     # Setup home-manager in NixOS config

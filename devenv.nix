@@ -64,7 +64,8 @@ in
 
         nix run 'github:nix-community/nixos-anywhere' -- \
           --disk-encryption-keys '/tmp/luks_passwordfile' "''${clear_luks_passwordfile}" \
-          --flake ".#''${hostname}" --target-host "''${target_host}"
+          --flake ".#''${hostname}" --target-host "''${target_host}" \
+          --ssh-option PreferredAuthentications=password --ssh-option PubkeyAuthentication=no
 
         rm "''${clear_luks_passwordfile}"
       '';
