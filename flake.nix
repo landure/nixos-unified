@@ -92,7 +92,12 @@
         nixosConfigurations = import ./nixosConfigurations inputs;
 
         nixosModules.default =
-          { lib, pkgs, ... }:
+          {
+            config,
+            lib,
+            pkgs,
+            ...
+          }:
           let
             inherit (lib.modules) mkForce;
           in
@@ -112,6 +117,28 @@
                   "/etc/ssh/ssh_host_ed25519_key"
                   "/home/pierre-yves/.ssh/id_ed25519"
                 ];
+
+                sops.secrets.hashedPassword = {
+                  neededForUsers = true;
+                  sopsFile = ./secrets/users/pierre-yves.yaml;
+                };
+
+                users = {
+                  mutableUsers = false;
+                  users.pierre-yves = {
+                    description = "Pierre-Yves Landuré";
+                    uid = 1000;
+                    isNormalUser = true;
+                    shell = pkgs.bashInteractive;
+
+                    createHome = true;
+                    hashedPasswordFile = config.sops.secrets.hashedPassword.path;
+                    extraGroups = [
+                      "ssh-users"
+                      "wheel"
+                    ];
+                  };
+                };
               }
             ];
           };
