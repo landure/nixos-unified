@@ -100,6 +100,7 @@
           }:
           let
             inherit (lib.modules) mkForce;
+            inherit (lib.filesystem) listFilesRecursive;
           in
           {
             imports = [
@@ -137,6 +138,8 @@
                       "ssh-users"
                       "wheel"
                     ];
+
+                    openssh.authorizedKeys.keyFiles = listFilesRecursive ./configs/users/pierre-yves/sshAuthorizedKeys;
                   };
                 };
               }
