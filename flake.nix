@@ -79,10 +79,10 @@
       # };
 
       perSystem =
-        { config, self, ... }:
+        { config, self', ... }:
         {
           # alias `nix run .#activate` to `nix run`
-          packages.default = self.packages.activate;
+          packages.default = self'.packages.activate;
         };
 
       flake = {
