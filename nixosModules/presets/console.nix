@@ -18,13 +18,13 @@ in
 
   config = mkIf cfg.enable {
     biapy.nixos-unified.nixos = {
-      system.nix-sane-defaults = mkDefault true;
+      system.nix-sane-defaults.enable = mkDefault true;
 
       console = {
-        docs = mkDefault true;
-        sudo = mkDefault true;
-        modern-cli = mkDefault true;
-        kmscon = mkDefault true;
+        docs.enable = mkDefault true;
+        sudo.enable = mkDefault true;
+        modern-cli.enable = mkDefault true;
+        kmscon.enable = mkDefault true;
       };
 
       services.openssh.enable = mkDefault true;
