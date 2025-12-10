@@ -2,7 +2,9 @@
     "conventionalCommits.scopes": [
         "devenv",
         "nixosModules",
-        "README"
+        "README",
+        "flake",
+        "ghost"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#2f7c47",
