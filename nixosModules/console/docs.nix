@@ -51,25 +51,26 @@ in
         '';
       };
 
-      full-doc = mkEnableOption "full documentation (NixOS, packages, and developers)";
+      full-docs = mkEnableOption "full documentation (NixOS, packages, and developers)";
     };
   };
 
   config = mkIf cfg.enable {
     environment.defaultPackages =
-      with pkgs;
-      flatten [
-        (optionals cfg.man-pages)
+
+      flatten (
+        with pkgs;
         [
-          man-pages
-          man-pages-posix
+          (optionals cfg.man-pages [
+            man-pages
+            man-pages-posix
+          ])
+          (optionals cfg.cheat-sheats [
+            cht-sh # command-line interface for the Cheat.sh service
+            tealdeer # `tldr` A very fast implementation of tldr in Rust
+          ])
         ]
-        (optionals cfg.cheat-sheats)
-        [
-          cht-sh # command-line interface for the Cheat.sh service
-          tealdeer # `tldr` A very fast implementation of tldr in Rust
-        ]
-      ];
+      );
 
     documentation = {
       # install documentation of packages from environment.systemPackages into the generated system path.
@@ -80,7 +81,7 @@ in
 
       # install manual pages.
       man = {
-        enable = mkDefault cfg.man-pages.enable; # enable manual pages and the man command.
+        enable = mkDefault cfg.man-pages; # enable manual pages and the man command.
 
         # generate the manual page index caches using mandb(8).
         # This allows searching for a page or keyword using utilities like apropos(1).
