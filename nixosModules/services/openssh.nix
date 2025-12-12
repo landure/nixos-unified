@@ -63,35 +63,37 @@ in
   config = mkIf cfg.enable {
     users.groups.ssh-users = { };
 
-    sops.secrets = {
-      "openssh/private_key" = {
-        mode = "0600";
-        owner = config.users.users.root.name;
-        inherit (config.users.users.root) group;
-        # path = "/etc/ssh/ssh_host_ed25519_key"
-      };
-      "openssh/public_key" = {
-        mode = "0644";
-        owner = config.users.users.root.name;
-        inherit (config.users.users.root) group;
-        # path = "/etc/ssh/ssh_host_ed25519_key.pub"
-      };
-    };
+    # sops.secrets = {
+    #   "openssh/private_key" = {
+    #     mode = "0600";
+    #     owner = config.users.users.root.name;
+    #     inherit (config.users.users.root) group;
+    #     # path = "/etc/ssh/ssh_host_ed25519_key"
+    #   };
+    #   "openssh/public_key" = {
+    #     mode = "0644";
+    #     owner = config.users.users.root.name;
+    #     inherit (config.users.users.root) group;
+    #     # path = "/etc/ssh/ssh_host_ed25519_key.pub"
+    #   };
+    # };
 
-    environment.etc = mkIf (cfg.ed25519_key != null) {
-      "ssh/ssh_host_ed25519_key" = {
-        source = config.sops.secrets."openssh/private_key".path;
-        mode = "0600";
-        uid = 0;
-        gid = 0;
-      };
-      "ssh/ssh_host_ed25519_key.pub" = {
-        source = config.sops.secrets."openssh/public_key".path;
-        mode = "0644";
-        uid = 0;
-        gid = 0;
-      };
-    };
+    # systemd.services.sshd-keygen.after = [ "sops-nix.service" ];
+
+    # environment.etc = mkIf (cfg.ed25519_key != null) {
+    #   "ssh/ssh_host_ed25519_key" = {
+    #     source = config.sops.secrets."openssh/private_key".path;
+    #     mode = "0600";
+    #     uid = 0;
+    #     gid = 0;
+    #   };
+    #   "ssh/ssh_host_ed25519_key.pub" = {
+    #     source = config.sops.secrets."openssh/public_key".path;
+    #     mode = "0644";
+    #     uid = 0;
+    #     gid = 0;
+    #   };
+    # };
 
     services = {
       # userborn.enable = true;

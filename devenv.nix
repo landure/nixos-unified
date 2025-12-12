@@ -1,10 +1,17 @@
 { lib, pkgs, ... }:
 let
   inherit (lib.meta) getExe;
-  inherit (pkgs) nixos-rebuild home-manager sops;
+  inherit (pkgs)
+    nixos-rebuild-ng
+    nixos-anywhere
+    home-manager
+    sops
+    ssh-to-age
+    ;
   # inherit (pkgs.stdenv.hostPlatform) system;
 
-  rebuildExe = getExe nixos-rebuild;
+  rebuildExe = getExe nixos-rebuild-ng;
+  anywhereExe = getExe nixos-anywhere;
 
   hmExe = getExe home-manager;
   sopsExe = getExe sops;
@@ -28,8 +35,10 @@ in
 
   packages = [
     sops
-    nixos-rebuild
+    ssh-to-age
+    nixos-rebuild-ng
     home-manager
+    nixos-anywhere
   ];
 
   # https://devenv.sh/tasks/
@@ -45,29 +54,46 @@ in
       description = ''
         Run nixos-anywhere with SOPS luks password file copy
         See <https://github.com/nix-community/disko/issues/641#issuecomment-2142627125>
+        and <https://nix-community.github.io/nixos-anywhere/howtos/secrets.html#example-decrypting-an-openssh-host-key-with-pass>
       '';
       exec = ''
         set -e
+
+        clear_luks_passwordfile="$(mktemp --quiet)"
+        extra_files="$(mktemp --quiet --directory)"
+        mkdir --mode=755 --parent "''${extra_files}/etc/ssh"
+
+        cleanup() {
+          echo "Removing decrypted SOPS secrets"
+          [[ -e "''${clear_luks_passwordfile}" ]] && rm "''${clear_luks_passwordfile}" || true
+          [[ -e "''${extra_files}" ]] && rm --recursive "''${extra_files}" || true
+        }
+
+        trap 'cleanup' EXIT
 
         hostname="''${1}"
         target_host="''${2}"
 
         secret_file="''${DEVENV_ROOT}/secrets/hosts/''${hostname}.yaml"
 
-        clear_luks_passwordfile="$(mktemp --quiet)"
+        # SOPS_AGE_SSH_PRIVATE_KEY_FILE="''${HOME}/.ssh/id_ed25519"
 
-        SOPS_AGE_SSH_PRIVATE_KEY_FILE="''${HOME}/.ssh/id_ed25519" \
-          ${sopsExe} --decrypt --extract "['luks_password']" \
+        ${sopsExe} --enable-local-keyservice --decrypt --extract "['luks_password']" \
             "''${secret_file}" > "''${clear_luks_passwordfile}"
+        # See https://github.com/nix-community/nixos-anywhere/issues/604#issuecomment-3642062243
+        ${sopsExe} --enable-local-keyservice --decrypt --extract "['openssh']['private_key']" \
+            "''${secret_file}" > "''${extra_files}/etc/ssh/ssh_host_ed25519_key"
+        ${sopsExe} --enable-local-keyservice --decrypt --extract "['openssh']['public_key']" \
+            "''${secret_file}" > "''${extra_files}/etc/ssh/ssh_host_ed25519_key.pub"
 
-          cat "''${clear_luks_passwordfile}"
+        chmod 600 "''${extra_files}/etc/ssh/ssh_host_ed25519_key"
 
-        nix run 'github:nix-community/nixos-anywhere' -- \
+        ${anywhereExe} \
           --disk-encryption-keys '/tmp/luks_passwordfile' "''${clear_luks_passwordfile}" \
-          --flake ".#''${hostname}" --target-host "''${target_host}" \
-          --ssh-option PreferredAuthentications=password --ssh-option PubkeyAuthentication=no
+          --extra-files "''${extra_files}" \
+          --flake ".#''${hostname}" \
+          --target-host "''${target_host}"
 
-        rm "''${clear_luks_passwordfile}"
       '';
     };
   };

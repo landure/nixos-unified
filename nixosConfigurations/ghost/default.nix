@@ -35,6 +35,8 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
         disko.devices.disk.main.device = "/dev/vda";
         disko.devices.disk.data.device = "/dev/vdb";
 
+        services.qemuGuest.enable = true;
+
         biapy.nixos-unified.nixos.presets.console.enable = true;
       }
     )

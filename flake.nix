@@ -54,7 +54,7 @@
         nixos-unified.flakeModules.default
 
         # See https://flake.parts/options/disko.html
-        inputs.disko.flakeModules.default
+        disko.flakeModules.default
       ];
 
       # Declared systems that your flake supports. These will be enumerated in perSystem
@@ -116,6 +116,8 @@
                 # This will automatically import SSH keys as age keys
                 sops.age.sshKeyPaths = [
                   "/etc/ssh/ssh_host_ed25519_key"
+                  # path for nixos-anywhere --extra-files option.
+                  "/mnt/etc/ssh/ssh_host_ed25519_key"
                   "/home/pierre-yves/.ssh/id_ed25519"
                 ];
 

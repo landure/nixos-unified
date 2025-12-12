@@ -3,8 +3,11 @@ keys:
   - &user_pierre-yves_landure_fr ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWk91xtWdVTzO7pSme5GLq7SjfIim5jqPuYqaIwWQGw pierre-yves@landure.fr
   - &user_pierre-yves ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+AXFFevH5pwawDneuBm7T4cHizNeD+KppBB+Z1qXgw pierre-yves@landure.fr
   - &host_co-bre-pc04 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIdGsGpFcZ1kMe3qfqxoilnB34VCMAiorrEixIH8O1/p root@co-bre-pc04
+  - &host_co-bre-pc04_ssh-to-age age1he9cm23fv7fug0wsh9j7hqz7stenj2rx2lscdnlh3d9v8dgmx4lszls9c9
   - &host_ghost ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMp2ZZez8lsKiiHC7u6Q/kSujA9c6/EPVzEof99i3c2O root@ghost
+  - &host_ghost_ssh-to-age age1u4f2amm3gytr6ggr046mefsvcmsx50l95eh3rx2g3rzxz245apgsmwhlqv
   - &host_endor ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4D+AyCN7lle7loJ259TTnbZOPOUHTm+Ev6+V3hSQad root@endor
+  - &host_endor_ssh-to-age age1z35ra0yw0djjra4qn6yaxru3ey0vhqjhrepd8ln5662fepeg4yts74x2uw
 creation_rules:
   - path_regex: secrets/.+\.(yaml|json|env|ini)$
     key_groups:
@@ -13,6 +16,8 @@ creation_rules:
       - *user_pierre-yves_landure_fr
       - *user_pierre-yves
       - *host_co-bre-pc04
+      - *host_co-bre-pc04_ssh-to-age
       - *host_ghost
+      - *host_ghost_ssh-to-age
       - *host_endor
-
+      - *host_endor_ssh-to-age
