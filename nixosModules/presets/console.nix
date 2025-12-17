@@ -21,6 +21,7 @@ in
       system = {
         nix-sane-defaults.enable = mkDefault true;
         autoUpgrade.enable = mkDefault true;
+        power-management.enable = mkDefault true;
       };
 
       console = {
