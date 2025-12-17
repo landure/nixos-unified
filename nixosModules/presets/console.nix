@@ -18,7 +18,10 @@ in
 
   config = mkIf cfg.enable {
     biapy.nixos-unified.nixos = {
-      system.nix-sane-defaults.enable = mkDefault true;
+      system = {
+        nix-sane-defaults.enable = mkDefault true;
+        autoUpgrade.enable = mkDefault true;
+      };
 
       console = {
         docs.enable = mkDefault true;
@@ -29,6 +32,5 @@ in
 
       services.openssh.enable = mkDefault true;
     };
-
   };
 }
