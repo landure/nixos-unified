@@ -9,6 +9,7 @@
   - [sudo homepage](https://www.sudo.ws/)
     ([sudo @ GitHub](https://github.com/sudo-project/sudo)).
   - [security.sudo @ NixOS reference](https://search.nixos.org/options?query=security.sudo)
+  - [security.pam.services.*.sshAgentAuth @ NixOS reference](https://search.nixos.org/options?query=security.pam.services.%3Cname%3E.sshAgentAuth)
   - [nix.settings.extra-trusted-users @ NixOS reference](https://search.nixos.org/options?query=nix.settings.extra-trusted-users)
 */
 {
@@ -68,6 +69,8 @@ in
         }
       ];
     };
+
+    security.pam.services.sudo.sshAgentAuth = mkDefault true;
 
     # Allow sudoers to run nix commands without password and apply remote builds
     nix.settings.extra-trusted-users = [ "@wheel" ];
