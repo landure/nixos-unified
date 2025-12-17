@@ -70,7 +70,30 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = attrValues cfg.packages;
 
-    programs.zoxide.enable = mkDefault true;
+    programs = {
+      bash.completion.enable = mkDefault true;
+
+      zsh = {
+        enable = mkDefault true;
+        enableCompletion = mkDefault true;
+        vteIntegration = mkDefault true;
+        autosuggestions.enable = mkDefault true;
+      };
+
+      starship.enable = mkDefault true; # Enhanced command prompt
+
+      # Install zoxide, lsdeluxe
+      zoxide.enable = mkDefault true;
+
+      skim.fuzzyCompletion = mkDefault true; # `sk` Fuzzy Finder in rust!
+      bat.enable = mkDefault true;
+
+      # Install Pay Respects
+      pay-respects.enable = mkDefault true;
+
+      # Install git
+      git.enable = mkDefault true;
+    };
   };
 
 }
