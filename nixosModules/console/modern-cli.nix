@@ -85,7 +85,7 @@ in
       # Install zoxide, lsdeluxe
       zoxide.enable = mkDefault true;
 
-      skim.fuzzyCompletion = mkDefault true; # `sk` Fuzzy Finder in rust!
+      skim.enable = mkDefault true; # `sk` Fuzzy Finder in rust!
       bat.enable = mkDefault true;
 
       # Install Pay Respects
