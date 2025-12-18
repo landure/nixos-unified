@@ -90,6 +90,8 @@ in
 
       # Install Pay Respects
       pay-respects.enable = mkDefault true;
+      # Payrespects require nix-locate or nix-search-cli
+      nix-index.enable = mkDefault true;
 
       # Install git
       git.enable = mkDefault true;
