@@ -21,10 +21,10 @@ in
       system = {
         nix-sane-defaults.enable = mkDefault true;
         autoUpgrade.enable = mkDefault true;
-        power-management.enable = mkDefault true;
       };
 
       console = {
+        ergol.enable = mkDefault true;
         docs.enable = mkDefault true;
         sudo.enable = mkDefault true;
         modern-cli.enable = mkDefault true;
