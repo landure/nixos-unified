@@ -6,19 +6,19 @@ let
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf mkDefault;
 
-  cfg = config.biapy.nixos-unified.nixos.presets.console;
+  cfg = config.biapy.nixos-unified.nixos.presets.laptop;
 
 in
 {
   options = {
-    biapy.nixos-unified.nixos.presets.console = {
+    biapy.nixos-unified.nixos.presets.laptop = {
       enable = mkEnableOption "Laptop presets";
     };
   };
 
   config = mkIf cfg.enable {
     biapy.nixos-unified.nixos = {
-      presets.console = mkDefault true;
+      presets.console.enable = mkDefault true;
       system.power-management.enable = mkDefault true;
     };
   };
