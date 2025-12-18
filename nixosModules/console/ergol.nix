@@ -23,7 +23,7 @@ in
           "ergol"
           "ergol_iso"
         ];
-        default = "ergol_iso";
+        default = "ergol";
         description = ''
           What ergol variant to use.
         '';
