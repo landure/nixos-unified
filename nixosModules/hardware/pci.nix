@@ -7,7 +7,10 @@
 let
   inherit (lib.modules) mkIf;
   inherit (config.facter) report;
+  inherit (lib.lists) length;
+
+  pci_hardware_available = length (report.hardware.pci or [ ]) > 0;
 in
 {
-  config = mkIf report.hardware.pci { environment.defaultPackages = with pkgs; [ pciutils ]; };
+  config = mkIf pci_hardware_available { environment.defaultPackages = with pkgs; [ pciutils ]; };
 }
