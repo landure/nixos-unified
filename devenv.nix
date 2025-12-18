@@ -73,6 +73,7 @@ in
 
         hostname="''${1}"
         target_host="''${2}"
+        shift 2
 
         secret_file="''${DEVENV_ROOT}/secrets/hosts/''${hostname}.yaml"
 
@@ -92,8 +93,7 @@ in
           --disk-encryption-keys '/tmp/luks_passwordfile' "''${clear_luks_passwordfile}" \
           --extra-files "''${extra_files}" \
           --flake ".#''${hostname}" \
-          --target-host "''${target_host}"
-
+          --target-host "''${target_host}" "''${@}"
       '';
     };
   };
