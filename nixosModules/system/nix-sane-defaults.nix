@@ -12,7 +12,7 @@ let
 in
 {
   options = {
-    biapy.nixos-unified.nixos.system.nix-sane-defaults.enable = mkEnableOption "ZSA keyboards";
+    biapy.nixos-unified.nixos.system.nix-sane-defaults.enable = mkEnableOption "Sane Defaults";
   };
 
   config = mkIf cfg.enable {
