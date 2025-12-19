@@ -19,6 +19,7 @@ in
     biapy.nixos-unified.nixos = {
       system = {
         nix-sane-defaults.enable = mkDefault true;
+        no-sleep.enable = mkDefault true;
       };
 
       console = {
