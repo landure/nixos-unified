@@ -19,7 +19,10 @@ in
     biapy.nixos-unified.nixos = {
       presets.console.enable = mkDefault true;
       system.power-management.enable = mkDefault true;
-      hardware.hw-tools = mkDefault true;
+      hardware = {
+        hw-tools.enable = mkDefault true;
+        sound.enable = mkDefault true;
+      };
     };
   };
 }
