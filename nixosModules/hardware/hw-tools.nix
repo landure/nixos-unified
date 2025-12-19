@@ -3,10 +3,22 @@
 
   Install tools for available hardware (USB, PCI, Bluetooth)
 
-  ## USB
+  ## 🛠️ Tech Stack
+
+  ### Bluetooth
+
+  - [bluez-tools @ GitHub](https://github.com/khvzak/bluez-tools).
+  - [BlueTUI @ GitHub](https://github.com/pythops/bluetui).
+  - [bluetuith @ GitHub](https://github.com/bluetuith-org/bluetuith).
+
+  ### USB
 
   - [Linux USB Project homepage](http://www.linux-usb.org/).
   - [cyme @ GitHub](https://github.com/tuna-f1sh/cyme).
+
+  ### AMD GPU
+
+  - [amdgpu_top @ GitHub](https://github.com/Umio-Yasuno/amdgpu_top).
 */
 {
   config,
@@ -20,6 +32,7 @@ let
   inherit (config.facter) report;
   inherit (lib.lists) length optional;
   inherit (pkgs)
+    amdgpu_top
     bluez-tools
     bluetui
     bluetuith
@@ -33,6 +46,7 @@ let
   pci_available = length (report.hardware.pci or [ ]) > 0;
   usb_available = length (report.hardware.usb or [ ]) > 0;
   bluetooth_available = config.facter.detected.bluetooth.enable;
+  amdgpu_available = config.facter.detected.graphics.amd.enable;
 in
 {
   options = {
@@ -53,6 +67,9 @@ in
         bluez-tools
         bluetui
         bluetuith
-      ]);
+      ])
+
+      // (optional amdgpu_available [ amdgpu_top ]);
+
   };
 }
