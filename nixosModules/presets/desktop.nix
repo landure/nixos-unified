@@ -1,17 +1,17 @@
 /**
-  # Laptop preset
+  # Desktop preset
 */
 { config, lib, ... }:
 let
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf mkDefault;
 
-  cfg = config.biapy.nixos-unified.nixos.presets.laptop;
+  cfg = config.biapy.nixos-unified.nixos.presets.desktop;
 in
 {
   options = {
-    biapy.nixos-unified.nixos.presets.laptop = {
-      enable = mkEnableOption "Laptop presets";
+    biapy.nixos-unified.nixos.presets.desktop = {
+      enable = mkEnableOption "Desktop presets";
     };
   };
 
