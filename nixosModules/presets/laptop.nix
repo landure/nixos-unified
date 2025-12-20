@@ -24,6 +24,10 @@ in
         hw-tools.enable = mkDefault true;
         sound.enable = mkDefault true;
       };
+
+      desktop = {
+        xdg.enable = true;
+      };
     };
   };
 }
