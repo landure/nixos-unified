@@ -27,6 +27,10 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
         facter.reportPath = ./facter.json;
         disko.devices.disk.main.device = "/dev/sda";
 
+        biapy.nixos-unified.nixos = {
+          presets.laptop.enable = true;
+          hardware.openrgb.enable = true;
+        };
       }
     )
     # Setup home-manager in NixOS config
