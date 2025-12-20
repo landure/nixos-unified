@@ -4,7 +4,8 @@
         "nixosModules",
         "README",
         "flake",
-        "ghost"
+        "ghost",
+        "iego"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#2f7c47",

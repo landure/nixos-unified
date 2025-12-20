@@ -31,6 +31,9 @@ self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
           presets.laptop.enable = true;
           hardware.openrgb.enable = true;
         };
+
+        # Add Udev rules for ZSA keyboards
+        hardware.keyboard.zsa.enable = true;
       }
     )
     # Setup home-manager in NixOS config
