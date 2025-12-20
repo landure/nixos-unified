@@ -5,7 +5,8 @@
         "README",
         "flake",
         "ghost",
-        "iego"
+        "iego",
+        "nixosConfigurations"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#2f7c47",
