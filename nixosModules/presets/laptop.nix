@@ -11,7 +11,7 @@ in
 {
   options = {
     biapy.nixos-unified.nixos.presets.laptop = {
-      enable = mkEnableOption "Laptop presets";
+      enable = mkEnableOption "Laptop preset";
     };
   };
 
@@ -20,6 +20,7 @@ in
       presets.console.enable = mkDefault true;
       system.power-management.enable = mkDefault true;
       hardware = {
+        backlight.enable = mkDefault true;
         hw-tools.enable = mkDefault true;
         sound.enable = mkDefault true;
       };
