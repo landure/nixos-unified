@@ -26,6 +26,7 @@ in
 
       desktop = {
         xdg.enable = true;
+        flatpak.enable = true;
       };
     };
 
