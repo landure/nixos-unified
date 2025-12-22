@@ -15,15 +15,15 @@ let
   # Filter for `.nix` files or directories
   isDirOrNixFile =
     name: value:
-    value == "directory" || (match ".*\\.nix$" name && value == "regular") && name != "default.nix";
+    (value == "directory" || ((null != match ".*\\.nix$" name) && value == "regular"))
+    && name != "default.nix";
 
   # convert filename or dirname to path
   toPath = name: ./. + name;
 
   filenames = attrNames (filterAttrs isDirOrNixFile contents);
 
-  imports = map toPath filenames;
 in
 {
-  inherit imports;
+  imports = map toPath filenames;
 }
