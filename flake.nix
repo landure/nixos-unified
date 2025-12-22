@@ -48,6 +48,7 @@
       sops-nix,
       disko,
       nixos-facter-modules,
+      nixpkgs,
       ...
     }@inputs:
     let
@@ -94,7 +95,7 @@
         # Configurations for Linux (NixOS) machines
         # nixosConfigurations = import ./hosts (inputs // { inherit myUserName; });
 
-        nixosConfigurations = import ./nixosConfigurations inputs;
+        nixosConfigurations = import ./nixosConfigurations (inputs // { inherit (nixpkgs) lib; });
 
         nixosModules.default =
           {
