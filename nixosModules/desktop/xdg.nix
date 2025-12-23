@@ -65,10 +65,7 @@ in
   };
 
   config = mkIf cfg.enable {
-
     xdg = {
-      enable = mkDefault true;
-
       portal = {
         enable = mkDefault true;
 
