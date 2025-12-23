@@ -161,6 +161,8 @@
             imports = [
               # @see https://nix-community.github.io/stylix
               inputs.stylix.homeModules.stylix
+
+              ./homeModules
             ];
 
             programs = {
