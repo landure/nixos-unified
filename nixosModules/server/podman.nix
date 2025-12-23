@@ -19,6 +19,7 @@
 
   - [dtop homepage](https://dtop.dev/)
     ([dtop @ GitHub](https://github.com/amir20/dtop)).
+  - [DockMate 🐳 @ GitHub](https://github.com/shubh-io/dockmate).
 */
 {
   config,
