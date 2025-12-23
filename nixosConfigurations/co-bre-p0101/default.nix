@@ -11,7 +11,7 @@ let
   stateVersion = "24.11";
 in
 {
-  endor = mkLinuxSystem { home-manager = true; } {
+  co-bre-p0101 = mkLinuxSystem { home-manager = true; } {
     nixpkgs.hostPlatform = "x86_64-linux";
     imports = [
       self.nixosModules.default
@@ -30,12 +30,8 @@ in
 
           facter.reportPath = ./facter.json;
 
-          biapy.nixos-unified.nixos = {
-            presets.wsl = {
-              enable = true;
-              defaultUser = mainUser;
-            };
-          };
+          wsl.enable = true;
+          wsl.defaultUser = mainUser;
         }
       )
 
