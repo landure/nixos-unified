@@ -13,7 +13,7 @@
 
   ## 📝 Documentation
 
-  - [hardware.openrgb @ NixOS reference](https://search.nixos.org/options?query=hardware.openrgb).
+  - [services.hardware.openrgb @ NixOS reference](https://search.nixos.org/options?query=services.hardware.openrgb).
   - [services.ratbagd @ NixOS reference](https://search.nixos.org/options?query=services.ratbagd).
 */
 {
@@ -38,11 +38,13 @@ in
 
   config = mkIf cfg.enable {
 
-    services.ratbagd.enable = mkDefault true;
+    services = {
+      ratbagd.enable = mkDefault true;
 
-    hardware.openrgb = {
-      enable = mkDefault true;
-      package = mkDefault openrgb-with-all-plugins;
+      hardware.openrgb = {
+        enable = mkDefault true;
+        package = mkDefault openrgb-with-all-plugins;
+      };
     };
 
     environment.defaultPackages = [ piper ];
