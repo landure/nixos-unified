@@ -13,7 +13,7 @@
 
   ## 📝 Documentation
 
-  - [virtualization.podman @ NixOS reference](https://search.nixos.org/options?query=virtualization.podman).
+  - [virtualisation.podman @ NixOS reference](https://search.nixos.org/options?query=virtualisation.podman).
 
   ## 🙇 Acknowledgements
 
@@ -41,7 +41,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    virtualization.podman = {
+    virtualisation.podman = {
       enable = mkDefault true;
       # Create an alias mapping podman to docker
       dockerCompat = mkDefault true;
