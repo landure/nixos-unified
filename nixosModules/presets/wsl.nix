@@ -9,7 +9,7 @@
 { config, lib, ... }:
 let
   inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.type) str;
+  inherit (lib.types) str;
   inherit (lib.modules) mkIf mkDefault;
 
   cfg = config.biapy.nixos-unified.nixos.presets.wsl;
