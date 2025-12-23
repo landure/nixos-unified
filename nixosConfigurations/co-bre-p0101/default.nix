@@ -15,7 +15,7 @@ in
     nixpkgs.hostPlatform = "x86_64-linux";
     imports = [
       self.nixosModules.default
-      self.nixos-wsl.nixosModules.default
+      self.inputs.nixos-wsl.nixosModules.default
 
       # Your machine's configuration.nix goes here
       (
