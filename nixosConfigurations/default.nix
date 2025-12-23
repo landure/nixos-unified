@@ -3,11 +3,11 @@
 
   attrset of hosts configurations
 */
-{ lib, ... }:
+{ lib, ... }@inputs:
 let
   inherit (lib.lists) map;
   inherit (lib.strings) match;
-  inherit (lib.attrsets) attrNames filterAttrs;
+  inherit (lib.attrsets) attrNames filterAttrs mergeAttrsList;
 
   # List the directory contents
   contents = builtins.readDir ./.;
@@ -19,11 +19,12 @@ let
     && name != "default.nix";
 
   # convert filename or dirname to path
-  toPath = name: ./. + name;
+  toPath = name: ./. + ("/" + name);
 
   filenames = attrNames (filterAttrs isDirOrNixFile contents);
 
+  hostImports = map toPath filenames;
+
+  hostConfigurations = map (hostImport: import hostImport inputs) hostImports;
 in
-{
-  imports = map toPath filenames;
-}
+mergeAttrsList hostConfigurations
