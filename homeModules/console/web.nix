@@ -25,6 +25,7 @@
 
   ## 🙇 Acknowledgements
 
+  - [eilmeldung @ GitHub](https://github.com/christo-auer/eilmeldung).
   - [Episode 619: The Trouble with TUIs @ Linux Unplugged](https://linuxunplugged.com/619)
 */
 {
